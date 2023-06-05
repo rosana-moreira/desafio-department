@@ -42,16 +42,15 @@ $ Get : http://localhost:8080/profiles
 
 # Para criar um perfil
 $ Post: http://localhost:8080/profiles
-
-    {
-			"name": "Junior"
-		} 
+  {
+		"name": "Junior"
+	} 
 
 # Para atualizar um perfil
 $ Put: http://localhost:8080/profiles/id
-    {
-			"name": "Pleno"
-		} 
+  {
+		"name": "Pleno"
+	} 
 # Para deletar um perfil (O perfil só irá ser deletado quando não estiver associado a um usuário)
 $ Delete : http://localhost:8080/profiles/id
 
@@ -89,6 +88,23 @@ $ Put: http://localhost:8080/positions/id
       }
     ]
   }
+
+
+```
+<H4> 🎲 Configuração do banco h2 </h4>
+
+```bash
+# Para acessar o banco de dados click no link 
+$ http://localhost:8080/h2-console
+
+# JDBC URL:
+$ jdbc:h2:mem:testdb
+
+# User Name :
+$ sa
+
+# Password: vazio
+$ 
 
 
 ```
