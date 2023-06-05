@@ -5,7 +5,9 @@ import com.test.department.services.UserService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
@@ -20,9 +22,9 @@ public class UsersResource {
 
     @GetMapping
     public ResponseEntity<Page<UserDTO>> findAll(Pageable pageable) {
+        pageable = PageRequest.of(pageable.getPageNumber(), pageable.getPageSize(), Sort.by("name").ascending());
         Page<UserDTO> list = service.findAllPaged(pageable);
         return ResponseEntity.ok().body(list);
-
     }
 
     @PostMapping
