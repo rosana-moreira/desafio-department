@@ -29,28 +29,31 @@ $ mvn spring-boot:run
  Post: http://localhost:8080/positions
 
     {
-			"name": "Arquiteto"
-		} 
+      "name": "Arquiteto"
+      } 
 
 # Para atualizar um cargo
  Put: http://localhost:8080/positions/id
+
     {
-			"name": "Scrum Master"
-		} 
+      "name": "Scrum Master"
+    } 
 # Para buscar todos os perfis em ordem alfabética:
  Get : http://localhost:8080/profiles
 
 # Para criar um perfil
  Post: http://localhost:8080/profiles
-  {
-		"name": "Junior"
-	} 
+
+   {
+    "name": "Junior"
+   } 
 
 # Para atualizar um perfil
  Put: http://localhost:8080/profiles/id
+
   {
-		"name": "Pleno"
-	} 
+    "name": "Pleno"
+  } 
 # Para deletar um perfil (O perfil só irá ser deletado quando não estiver associado a um usuário)
  Delete : http://localhost:8080/profiles/id
 
@@ -76,6 +79,7 @@ $ mvn spring-boot:run
 
 # Para atualizar um usuário
  Put: http://localhost:8080/positions/id
+ 
     {
     "name": "Fernanda",
     "cpf": "14412043673",
