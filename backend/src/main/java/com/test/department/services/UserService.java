@@ -8,6 +8,8 @@ import com.test.department.entities.User;
 import com.test.department.repositories.CompanyPositionRepository;
 import com.test.department.repositories.ProfileRepository;
 import com.test.department.repositories.UserRepository;
+import com.test.department.services.exceptions.ResourceNotFoundException;
+import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -20,7 +22,7 @@ import java.time.Instant;
 @Service
 public class UserService {
     @Autowired
-   private UserRepository repository;
+    private UserRepository repository;
 
     @Autowired
     private ProfileRepository profileRepository;
@@ -44,6 +46,18 @@ public class UserService {
         return new UserDTO(entity);
     }
 
+    @Transactional
+    public UserDTO update(UserDTO dto, Long id) {
+        try {
+            User entity = repository.getOne(id);
+            copyDtoEntity(dto, entity);
+            entity = repository.save(entity);
+            return new UserDTO(entity);
+        } catch (EntityNotFoundException e) {
+            throw new ResourceNotFoundException("Alteração não permitida para o id :" + id);
+        }
+    }
+
     private void copyDtoEntity(UserDTO dto, User entity) {
         entity.setName(dto.getName());
         entity.setCpf(dto.getCpf());
@@ -52,13 +66,13 @@ public class UserService {
         entity.setBirthDate(dto.getBirthDate());
 
         CompanyPosition companyPosition = companyPositionRepository.findById(dto.getCompanyPositionId())
-                .orElseThrow(() -> new IllegalArgumentException("Cargo não encontrado"));
+                .orElseThrow(() -> new ResourceNotFoundException("Cargo não encontrado!"));
         entity.setCompanyPosition(companyPosition);
 
         entity.getProfiles().clear();
         for (ProfileDTO ptDto : dto.getProfile()) {
             Profile p = profileRepository.findById(ptDto.getId())
-                    .orElseThrow(() -> new IllegalArgumentException("Perfil não encontrado com o ID: " + ptDto.getId()));
+                    .orElseThrow(() -> new ResourceNotFoundException("Perfil não encontrado com o ID: " + ptDto.getId()));
             entity.getProfiles().add(p);
         }
 

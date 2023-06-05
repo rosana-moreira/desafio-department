@@ -4,7 +4,7 @@ import com.test.department.dto.ProfileDTO;
 
 import com.test.department.entities.Profile;
 import com.test.department.repositories.ProfileRepository;
-import com.test.department.services.exception.DeletePerfilException;
+import com.test.department.services.exceptions.ResourceNotFoundException;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -15,7 +15,7 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 public class ProfileService {
     @Autowired
-   private ProfileRepository repository;
+    private ProfileRepository repository;
 
     @Transactional(readOnly = true)
     public Page<ProfileDTO> findAllPaged(Pageable pageable) {
@@ -41,15 +41,15 @@ public class ProfileService {
             entity = repository.save(entity);
             return new ProfileDTO(entity);
         } catch (EntityNotFoundException e) {
-            throw new EntityNotFoundException("id não encontrado!");
+            throw new ResourceNotFoundException("Alteração não permitida para o id : " + id);
         }
     }
 
     @Transactional
-    public void deleteProfile(Long id) throws DeletePerfilException {
+    public void deleteProfile(Long id) {
         int records = repository.deleteProfilesWithoutUsers(id);
         if (records == 0) {
-            throw new DeletePerfilException("Não foi possível excluir o perfil com ID: " + id);
+            throw new ResourceNotFoundException("Não foi possível excluir o perfil com id : " + id);
         }
     }
 

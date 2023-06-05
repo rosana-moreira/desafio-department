@@ -2,7 +2,7 @@ package com.test.department.resources;
 
 import com.test.department.dto.ProfileDTO;
 import com.test.department.services.ProfileService;
-import com.test.department.services.exception.DeletePerfilException;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -28,20 +28,20 @@ public class ProfileResource {
     }
 
     @PostMapping
-    public ResponseEntity<ProfileDTO> insert(@RequestBody ProfileDTO dto) {
+    public ResponseEntity<ProfileDTO> insert(@Valid @RequestBody ProfileDTO dto) {
         dto = service.insert(dto);
         URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(dto.getId()).toUri();
         return ResponseEntity.created(uri).body(dto);
     }
 
     @PutMapping(value = "/{id}")
-    public ResponseEntity<ProfileDTO> update(@PathVariable Long id, @RequestBody ProfileDTO dto) {
+    public ResponseEntity<ProfileDTO> update(@PathVariable Long id, @Valid @RequestBody ProfileDTO dto) {
         dto = service.update(dto, id);
         return ResponseEntity.ok().body(dto);
     }
 
     @DeleteMapping(value = "/{id}")
-    public ResponseEntity<Void> delete(@PathVariable Long id) throws DeletePerfilException {
+    public ResponseEntity<Void> delete(@PathVariable Long id) {
         service.deleteProfile(id);
         return ResponseEntity.noContent().build();
     }

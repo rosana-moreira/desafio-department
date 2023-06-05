@@ -3,6 +3,7 @@ package com.test.department.services;
 import com.test.department.dto.CompanyPositionDTO;
 import com.test.department.entities.CompanyPosition;
 import com.test.department.repositories.CompanyPositionRepository;
+import com.test.department.services.exceptions.ResourceNotFoundException;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -38,7 +39,7 @@ public class CompanyPositionService {
             entity = repository.save(entity);
             return new CompanyPositionDTO(entity);
         } catch (EntityNotFoundException e) {
-            throw new EntityNotFoundException("id não encontrado!");
+            throw new ResourceNotFoundException("Alteração não permitida para o id : " + id);
         }
     }
 

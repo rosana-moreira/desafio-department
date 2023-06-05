@@ -4,6 +4,7 @@ import com.test.department.dto.CompanyPositionDTO;
 
 import com.test.department.services.CompanyPositionService;
 
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -29,14 +30,14 @@ public class CompanyPositionResource {
     }
 
     @PostMapping
-    public ResponseEntity<CompanyPositionDTO> insert(@RequestBody CompanyPositionDTO dto) {
+    public ResponseEntity<CompanyPositionDTO> insert(@Valid @RequestBody CompanyPositionDTO dto) {
         dto = service.insert(dto);
         URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(dto.getId()).toUri();
         return ResponseEntity.created(uri).body(dto);
     }
 
     @PutMapping(value = "/{id}")
-    public ResponseEntity<CompanyPositionDTO> update(@PathVariable Long id, @RequestBody CompanyPositionDTO dto) {
+    public ResponseEntity<CompanyPositionDTO> update(@PathVariable Long id, @Valid @RequestBody CompanyPositionDTO dto) {
         dto = service.update(dto, id);
         return ResponseEntity.ok().body(dto);
     }
