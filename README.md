@@ -9,7 +9,7 @@
 
 ```bash
 # Clone este repositório
-$ git@github.com:rosana-moreira/desafio-department.git
+$ git@github.com:git@github.com:rosana-moreira/desafio-gerenciamento-usuario.git
 
 # Acesse a pasta do projeto no terminal/cmd
 $ cd desafio-department/backend
