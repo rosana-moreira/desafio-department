@@ -12,7 +12,7 @@
 $ git@github.com:git@github.com:rosana-moreira/desafio-gerenciamento-usuario.git
 
 # Acesse a pasta do projeto no terminal/cmd
-$ cd desafio-department/backend
+$ cd desafio-gerenciamento-usuario/backend
 
 
 # Execute o projeto
